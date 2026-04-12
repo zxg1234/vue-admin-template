@@ -71,8 +71,8 @@ export default {
       this.$refs.formLabelAlign.validate((valid) => {
         if (valid) {
           // 这里可以进行登录逻辑，例如发送登录请求
-          console.log('登录成功', this.formLabelAlign)
-          alert('登录成功')
+          console.log('表单校验成功' + this.formLabelAlign)
+          this.$store.dispatch('user/login', this.formLabelAlign)
         } else {
           console.log('表单验证失败')
           alert('表单验证失败，请检查输入')
