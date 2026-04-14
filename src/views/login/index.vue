@@ -5,28 +5,19 @@
       <h1>手机号登录</h1>
       <el-card shadow="never" class="login-card">
         <!--登录表单-->
-        <el-form ref="formLabelAlign" :label-position="labelPosition" label-width="80px" :model="formLabelAlign" :rules="formRuls">
+        <el-form ref="formLabelAlign" :label-position="labelPosition" label-width="80px" :model="formLabelAlign"
+          :rules="formRuls">
           <el-form-item label="手机号" prop="phone">
-            <el-input
-              v-model="formLabelAlign.phone"
-              placeholder="请输入手机号"
-            />
+            <el-input v-model="formLabelAlign.phone" placeholder="请输入手机号" />
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input
-              v-model="formLabelAlign.password"
-              laceholder="请输入密码"
-              show-password
-            />
+            <el-input v-model="formLabelAlign.password" laceholder="请输入密码" show-password />
           </el-form-item>
           <el-form-item prop="isAgree">
             <el-checkbox v-model="formLabelAlign.isAgree">用户平台使用协议</el-checkbox>
           </el-form-item>
           <el-form-item>
-            <el-button
-              type="primary"
-              style="width: 350px"
-              @click="onSubmit">登录</el-button>
+            <el-button type="primary" style="width: 350px" @click="onSubmit">登录</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -54,13 +45,15 @@ export default {
           { min: 6, max: 20, message: '密码长度必须在6-20位', trigger: 'blur' }
         ],
         isAgree: [
-          { validator: (rule, value, callback) => {
-            if (!value) {
-              callback(new Error('请同意用户平台使用协议'))
-            } else {
-              callback()
-            }
-          }, trigger: 'change' }
+          {
+            validator: (rule, value, callback) => {
+              if (!value) {
+                callback(new Error('请同意用户平台使用协议'))
+              } else {
+                callback()
+              }
+            }, trigger: 'change'
+          }
         ]
 
       }
