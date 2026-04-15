@@ -7,8 +7,8 @@
         <!--登录表单-->
         <el-form ref="formLabelAlign" :label-position="labelPosition" label-width="80px" :model="formLabelAlign"
           :rules="formRuls">
-          <el-form-item label="手机号" prop="phone">
-            <el-input v-model="formLabelAlign.phone" placeholder="请输入手机号" />
+          <el-form-item label="手机号" prop="mobile">
+            <el-input v-model="formLabelAlign.mobile" placeholder="请输入手机号" />
           </el-form-item>
           <el-form-item label="密码" prop="password">
             <el-input v-model="formLabelAlign.password" laceholder="请输入密码" show-password />
@@ -31,12 +31,12 @@ export default {
     return {
       labelPosition: 'right',
       formLabelAlign: {
-        phone: '',
+        mobile: '',
         password: '',
         isAgree: false
       },
       formRuls: {
-        phone: [
+        mobile: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
           { pattern: /^1[3-9]\d{9}$/, message: '请输入正确的手机号', trigger: 'blur' }
         ],
@@ -61,14 +61,14 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$refs.formLabelAlign.validate((valid) => {
+      this.$refs.formLabelAlign.validate(async(valid) => {
         if (valid) {
           // 这里可以进行登录逻辑，例如发送登录请求
           console.log('表单校验成功' + this.formLabelAlign)
-          this.$store.dispatch('user/login', this.formLabelAlign)
+          await this.$store.dispatch('user/login', this.formLabelAlign)
+          this.$router.push('/')
         } else {
           console.log('表单验证失败')
-          alert('表单验证失败，请检查输入')
           return false
         }
       })
