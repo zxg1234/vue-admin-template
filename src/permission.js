@@ -4,11 +4,14 @@ import 'nprogress/nprogress.css'
 import store from '@/store'
 
 const WHITE_LIST = ['/login', '/404'] // 不重定向白名单
-router.beforeEach((to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   // 开启进度条
   NProgress.start()
   if (store.getters.token) {
     // 有token
+    if (!store.getters.userId) {
+      await store.dispatch('user/getUserInfo')
+    }
     if (to.path === '/login') {
       // 已登录，重定向到主页
       next({ path: '/' })
