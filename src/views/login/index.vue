@@ -33,7 +33,7 @@ export default {
       formLabelAlign: {
         mobile: '',
         password: '',
-        isAgree: false
+        isAgree: true
       },
       formRuls: {
         mobile: [
