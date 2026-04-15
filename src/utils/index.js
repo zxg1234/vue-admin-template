@@ -122,9 +122,6 @@ export function param2Obj(url) {
 export function convertListToTree(list, pid) {
   const arr = []
   list.forEach(item => {
-    if(item.managerName.length > 3) {
-      item.managerName = item.managerName.slice(0, 3)
-    }
     if (item.pid === pid) {
       const children = convertListToTree(list, item.id)
       item.children = children
