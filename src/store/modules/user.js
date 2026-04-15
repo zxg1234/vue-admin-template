@@ -28,8 +28,12 @@ const actions = {
   // 获取用户信息
   async getUserInfo(context) {
     const userInfo = await getUserInfo()
-    console.log(userInfo)
     context.commit('setUserInfo', userInfo)
+  },
+  // 退出登录
+  logout(context) {
+    context.commit('removeToken')
+    context.commit('setUserInfo', {})
   }
 }
 

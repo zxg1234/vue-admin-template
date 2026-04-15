@@ -1,5 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
+import router from '@/router'
+import { Message } from 'element-ui'
 
 const request = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -30,7 +32,16 @@ request.interceptors.response.use(
       return data
     }
   },
-  function(error) {
+  async function(error) {
+    // eslint-disable-next-line no-undef
+    Message({
+      message: 'token过期，请重新登录',
+      type: 'warning'
+    })
+    if (error.response.status === 401) {
+      await store.dispatch('user/logout')
+      router.push('/login')
+    }
     // Any status codes that fall outside the range of 2xx cause this function to trigger
     // Do something with response error
     return Promise.reject(error)
