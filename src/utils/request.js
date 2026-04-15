@@ -27,6 +27,11 @@ request.interceptors.response.use(
     console.log(message)
     console.log(data)
     if (success === false) {
+      Message({
+        message: message || '业务错误',
+        type: 'error',
+        duration: 3 * 1000
+      })
       return Promise.reject(new Error(message || 'Error'))
     } else {
       return data
