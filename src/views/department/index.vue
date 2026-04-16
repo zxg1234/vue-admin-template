@@ -72,6 +72,7 @@ export default {
           type: 'warning'
         }).then(async() => {
           await deleteDepartment(id)
+          this.$message.success('删除成功')
           this.getDepartmentList()
         }).catch(() => {
           this.$message({
