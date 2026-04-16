@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { getDepartmentList } from '@/api/department'
+import { getDepartmentList, deleteDepartment } from '@/api/department'
 import { convertListToTree } from '@/utils'
 import AddDept from './components/add-dept.vue'
 export default {
@@ -64,6 +64,20 @@ export default {
         this.showDialog = true
         this.$nextTick(() => {
           this.$refs.addDept.queryDept()
+        })
+      } else if (type === 'delete') {
+        this.$confirm('你确认要删除该部门吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async() => {
+          await deleteDepartment(id)
+          this.getDepartmentList()
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
         })
       }
     }

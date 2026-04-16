@@ -34,3 +34,9 @@ export function updateDepartment(data) {
   })
 }
 
+export function deleteDepartment(id) {
+  return request({
+    url: `/company/department/${id}`,
+    method: 'DELETE'
+  })
+}

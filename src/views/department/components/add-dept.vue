@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="新增部门" :visible="showDialog" @close="closeDialog">
+  <el-dialog :title="setTitle" :visible="showDialog" @close="closeDialog">
     <el-form ref="addDeptForm" label-width="120px" :model="addDeptForm" :rules="rules">
       <el-form-item label="部门名称" prop="name">
         <el-input v-model="addDeptForm.name" placeholder="请输入2-10个字符" style="width: 80%;" size="mini" />
@@ -106,6 +106,11 @@ export default {
           { min: 1, max: 100, message: '长度在 1 到 100 个字符', trigger: 'blur' }
         ]
       }
+    }
+  },
+  computed: {
+    setTitle() {
+      return this.addDeptForm.id ? '编辑部门' : '新增部门'
     }
   },
   created() {
