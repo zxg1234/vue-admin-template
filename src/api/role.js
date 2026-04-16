@@ -13,3 +13,18 @@ export function addRole(data) {
     data
   })
 }
+
+export function editRole(data) {
+  return request({
+    url: `/sys/role/${data.id}`,
+    method: 'PUT',
+    data
+  })
+}
+
+export function deleteRole(id) {
+  return request({
+    url: `/sys/role/${id}`,
+    method: 'DELETE'
+  })
+}
