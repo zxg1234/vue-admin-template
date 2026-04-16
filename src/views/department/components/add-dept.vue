@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { getDepartmentList, getManagerList, addDepartment } from '@/api/department'
+import { getDepartmentList, getManagerList, addDepartment, queryDept, updateDepartment } from '@/api/department'
 
 export default {
   props: {
@@ -71,6 +71,9 @@ export default {
           {
             trigger: 'blur',
             validator: (rule, value, callback) => {
+              if (this.addDeptForm.id) {
+                this.allDepts = this.allDepts.filter(item => item.id !== this.addDeptForm.id)
+              }
               if (this.allDepts.some(item => item.name === value)) {
                 callback(new Error('该部门名称已经存在'))
               } else {
@@ -85,6 +88,9 @@ export default {
           {
             trigger: 'blur',
             validator: (rule, value, callback) => {
+              if (this.addDeptForm.id) {
+                this.allDepts = this.allDepts.filter(item => item.id !== this.addDeptForm.id)
+              }
               if (this.allDepts.some(item => item.code === value)) {
                 callback(new Error('部门中已有该编码'))
               } else {
@@ -109,6 +115,13 @@ export default {
   methods: {
     closeDialog() {
       // eslint-disable-next-line no-undef
+      this.addDeptForm = {
+        name: '',
+        code: '',
+        managerId: '',
+        introduce: '',
+        pid: ''
+      }
       this.$refs.addDeptForm.resetFields()
       this.$emit('update:showDialog', false)
     },
@@ -121,15 +134,28 @@ export default {
     addDept() {
       this.$refs.addDeptForm.validate(async(valid) => {
         if (valid) {
-          await addDepartment({
-            ...this.addDeptForm,
-            pid: this.currentNodeId
-          })
-          this.$message.success('新增成功')
+          if (this.addDeptForm.id) {
+            // 修改
+            await updateDepartment({
+              ...this.addDeptForm
+            })
+            this.$message.success('修改成功')
+          } else {
+            // 新增
+            await addDepartment({
+              ...this.addDeptForm,
+              pid: this.currentNodeId
+            })
+            this.$message.success('新增成功')
+          }
           this.$emit('updateDepartment')
           this.closeDialog()
         }
       })
+    },
+    async queryDept() {
+      const currentForm = await queryDept(this.currentNodeId)
+      this.addDeptForm = { ...currentForm }
     }
   }
 

@@ -20,3 +20,17 @@ export function addDepartment(data) {
   })
 }
 
+export function queryDept(id) {
+  return request({
+    url: `/company/department/${id}`
+  })
+}
+
+export function updateDepartment(data) {
+  return request({
+    url: `/company/department/${data.id}`,
+    method: 'PUT',
+    data
+  })
+}
+
