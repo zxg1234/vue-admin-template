@@ -28,3 +28,25 @@ export function userPageList(data) {
     url: `/sys/user?page=${data.page}&pagesize=${data.pagesize}&keyword=${data.keyword}&departmentId=${data.departmentId}`
   })
 }
+
+export function exportUserList() {
+  return request({
+    url: `/sys/user/export`,
+    responseType: 'blob'
+  })
+}
+
+export function downloadTemp() {
+  return request({
+    url: `/sys/user/import/template`,
+    responseType: 'blob'
+  })
+}
+
+export function uploadExcel(data) {
+  return request({
+    url: `/sys/user/import`,
+    method: 'POST',
+    data
+  })
+}

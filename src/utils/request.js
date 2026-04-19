@@ -5,7 +5,7 @@ import { Message } from 'element-ui'
 
 const request = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
-  timeout: 10000
+  timeout: 100000
 })
 
 request.interceptors.request.use(
@@ -23,9 +23,8 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   function(response) {
     const { data, message, success } = response.data
-    console.log(success)
-    console.log(message)
-    console.log(data)
+    console.log('data', response.data)
+    if (response.data instanceof Blob) return response.data
     if (success === false) {
       Message({
         message: message || '业务错误',
