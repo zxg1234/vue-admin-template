@@ -7,7 +7,7 @@
       <el-table :data="rows">
         <el-table-column align="center" width="50" label="序号">
           <template slot-scope="scope">
-            {{ (pageParamForm.page - 1) * pageParamForm.pageSize + scope.$index + 1 }}
+            {{ num + scope.$index + 1 }}
           </template>
         </el-table-column>
         <el-table-column label="角色名称" width="200" align="center" prop="name">
@@ -96,6 +96,7 @@ export default {
         pageSize: 5
       },
       rows: [],
+      num: 1,
       total: 0,
       showDialog: false,
       addRoleForm: {
@@ -132,6 +133,7 @@ export default {
           description: item.description
         })
       })
+      this.num = (this.pageParamForm.page - 1) * this.pageParamForm.pageSize
     },
     handleCurrentChange(currentPage) {
       this.pageParamForm.page = currentPage
