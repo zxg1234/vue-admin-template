@@ -123,9 +123,9 @@ export function convertListToTree(list, pid) {
   const arr = []
   list.forEach(item => {
     if (item.pid === pid) {
-      const children = convertListToTree(list, item.id)
-      item.children = children
       arr.push(item)
+      const children = convertListToTree(list, item.id)
+      if (children.length) { item.children = children }
     }
   })
   return arr

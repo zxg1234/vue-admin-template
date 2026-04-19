@@ -25,7 +25,7 @@
       </div>
       <div class="right">
         <el-row class="opeate-tools" type="flex" justify="end">
-          <el-button size="mini" type="primary">添加员工</el-button>
+          <el-button size="mini" type="primary" @click="$router.push('/employee/detail')">添加员工</el-button>
           <el-button size="mini" @click="changeImportExcel">excel导入</el-button>
           <el-button size="mini" @click="exprotEmp">excel导出</el-button>
         </el-row>
@@ -71,19 +71,22 @@
             label="入职时间"
           />
           <el-table-column
-            prop="address"
             label="操作"
             width="130"
           >
-            <el-row type="flex" justify="center" align="middle">
-              <el-col>
-                <el-button type="text" size="mini" class="mr-1">查看</el-button>
-                <el-button type="text" size="mini" class="mr-1">角色</el-button>
-                <el-button type="text" size="mini">删除</el-button>
-              </el-col>
-            </el-row>
+            <template v-slot="{row}">
+              <el-button type="text" size="mini" class="mr-1" @click="$router.push(`/employee/detail/${row.id}`)">查看</el-button>
+              <el-button type="text" size="mini" class="mr-1">角色</el-button>
+              <el-popconfirm
+                title="这是一段内容确定删除吗？"
+                @onConfirm="removeUser(row.id)"
+              >
+                <el-button slot="reference" type="text" size="mini" style="margin-left: 10px;">删除</el-button>
+              </el-popconfirm>
+            </template>
           </el-table-column>
         </el-table>
+        <!-- 分页 -->
         <el-row type="flex" justify="end" align="middle" style="width: 100%;">
 
           <el-pagination
@@ -95,7 +98,6 @@
           />
 
         </el-row>
-        <!-- 分页 -->
       </div>
     </div>
     <import-excel :show-excel-dialog.sync="showExcelDialog" :upload-success="getUserPageList" />
@@ -106,7 +108,7 @@
 
 import { getDepartmentList } from '@/api/department'
 import { convertListToTree } from '@/utils'
-import { userPageList, exportUserList } from '@/api/user'
+import { userPageList, exportUserList, deleteUser } from '@/api/user'
 import FileSaver from 'file-saver'
 import importExcel from './components/import-excel.vue'
 export default {
@@ -129,7 +131,8 @@ export default {
       },
       total: 1,
       tableData: [],
-      showExcelDialog: false
+      showExcelDialog: false,
+      visible: true
     }
   },
   created() {
@@ -176,6 +179,14 @@ export default {
     },
     changeImportExcel() {
       this.showExcelDialog = !this.showExcelDialog
+    },
+    async removeUser(id) {
+      await deleteUser(id)
+      this.$message.success('删除成功')
+      if (this.tableData.length === 1 && this.queryParam.page > 1) {
+        this.queryParam.page -= 1
+      }
+      this.getUserPageList()
     }
   }
 }

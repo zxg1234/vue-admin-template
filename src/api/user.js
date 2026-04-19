@@ -50,3 +50,32 @@ export function uploadExcel(data) {
     data
   })
 }
+
+export function addUser(data) {
+  return request({
+    url: `/sys/user`,
+    method: 'POST',
+    data
+  })
+}
+
+export function queryUser(id) {
+  return request({
+    url: `/sys/user/${id}`
+  })
+}
+
+export function updateUser(data) {
+  return request({
+    url: `/sys/user/${data.id}`,
+    method: 'PUT',
+    data
+  })
+}
+
+export function deleteUser(id) {
+  return request({
+    url: `/sys/user/${id}`,
+    method: 'DELETE'
+  })
+}
