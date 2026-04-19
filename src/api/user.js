@@ -23,3 +23,8 @@ export function updatePassword(data) {
   })
 }
 
+export function userPageList(data) {
+  return request({
+    url: `/sys/user?page=${data.page}&pagesize=${data.pagesize}&keyword=${data.keyword}&departmentId=${data.departmentId}`
+  })
+}

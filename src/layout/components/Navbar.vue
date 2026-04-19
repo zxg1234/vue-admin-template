@@ -30,16 +30,16 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <el-dialog title="修改密码" :visible.sync="showPasswordDialog" @close="cancelPassword" width="35%" center>
-      <el-form label-width="100px" :model="updatePasswordForm" :rules="rules" ref="updatePassword">
+    <el-dialog title="修改密码" :visible.sync="showPasswordDialog" width="35%" center @close="cancelPassword">
+      <el-form ref="updatePassword" label-width="100px" :model="updatePasswordForm" :rules="rules">
         <el-form-item size="small" label="旧密码" prop="oldPassword">
-          <el-input show-password v-model="updatePasswordForm.oldPassword"></el-input>
+          <el-input v-model="updatePasswordForm.oldPassword" show-password />
         </el-form-item>
         <el-form-item size="small" label="新密码" prop="newPassword">
-          <el-input show-password v-model="updatePasswordForm.newPassword"></el-input>
+          <el-input v-model="updatePasswordForm.newPassword" show-password />
         </el-form-item>
         <el-form-item size="small" label="确认新密码" prop="confirmPassword">
-          <el-input show-password v-model="updatePasswordForm.confirmPassword"></el-input>
+          <el-input v-model="updatePasswordForm.confirmPassword" show-password />
         </el-form-item>
         <el-form-item>
           <el-button size="mini" type="primary" @click="submitPassword">提交</el-button>
